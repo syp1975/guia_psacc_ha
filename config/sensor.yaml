@@ -1,0 +1,111 @@
+- platform: rest
+  name: mycar
+  resource_template: "{{ states('input_text.mycar_baseurl') }}/get_vehicleinfo/{{ states('input_text.mycar_vin') }}?from_cache=1"
+  scan_interval: 60
+  timeout: 10
+  value_template: 'OK'
+  json_attributes:
+  - energy
+  - timed_odometer
+  - battery
+  - last_position
+  - preconditionning
+- platform: rest
+  name: mycar_carga
+  resource_template: "{{ states('input_text.mycar_baseurl') }}/charge_control?vin={{ states('input_text.mycar_vin') }}&always_check=true"
+  scan_interval: 60
+  timeout: 10
+  value_template: 'OK'
+  json_attributes:
+  - _next_stop_hour
+  - _stop_hour
+  - percentage_threshold
+- platform: template
+  sensors:
+    mycar_actualizado:
+      friendly_name: "MyCar Actualizado"
+      value_template: '{{ states.sensor.mycar.attributes["energy"][0]["updated_at"] }}'
+      device_class: timestamp
+    mycar_kilometraje:
+      friendly_name: "MyCar Kilometraje"
+      unit_of_measurement: "km"
+      value_template: '{{ states.sensor.mycar.attributes["timed_odometer"]["mileage"] }}'
+      icon_template: mdi:counter
+    mycar_bateria:
+      friendly_name: "MyCar Batería"
+      unit_of_measurement: "%"
+      value_template: '{{ states.sensor.mycar.attributes["energy"][0]["level"] }}'
+      device_class: battery
+    mycar_bateria_intensidad:
+      friendly_name: "MyCar Batería Intensidad"
+      unit_of_measurement: "A"
+      value_template: '{{ states.sensor.mycar.attributes["battery"]["current"] }}'
+      device_class: current
+    mycar_bateria_voltage:
+      friendly_name: "MyCar Batería Voltage"
+      unit_of_measurement: "V"
+      value_template: '{{ states.sensor.mycar.attributes["battery"]["voltage"] * 4 }}'
+      device_class: voltage
+    mycar_autonomia:
+      friendly_name: "MyCar Autonomía"
+      unit_of_measurement: "km"
+      value_template: '{{ states.sensor.mycar.attributes["energy"][0]["autonomy"] }}'
+      icon_template: mdi:road-variant
+    mycar_carga_tipo:
+      friendly_name: "MyCar Tipo Carga"
+      value_template: '{{ states.sensor.mycar.attributes["energy"][0]["charging"]["charging_mode"] }}'
+      icon_template: >
+        {% set st = states.sensor.mycar.attributes["energy"][0]["charging"]["charging_mode"] %}
+        {% if st == "Slow" %}
+          mdi:ev-plug-type2
+        {% elif st == "Quick" %}
+          mdi:ev-plug-ccs2
+        {% else %}
+          mdi:blank
+        {% endif %}
+    mycar_carga_estado:
+      friendly_name: "MyCar Estado Carga"
+      value_template: '{{ states.sensor.mycar.attributes["energy"][0]["charging"]["status"] }}'
+      attribute_templates:
+        value: '{{ states.sensor.mycar.attributes["energy"][0]["charging"]["status"] == "InProgress" }}'
+      icon_template: >
+        {% set st = states.sensor.mycar.attributes["energy"][0]["charging"]["status"] %}
+        {% if st == "Disconnected" %}
+          mdi:blank
+        {% elif st == "Stopped" %}
+          mdi:battery-check
+        {% elif st == "InProgress" %}
+          mdi:battery-charging
+        {% elif st == "Finished" %}
+          mdi:battery-check
+        {% elif st == "Failure" %}
+          mdi:battery-alert
+        {% else %}
+          mdi:battery-unknown
+        {% endif %}
+    mycar_carga_velocidad:
+      friendly_name: "MyCar Velocidad Carga"
+      value_template: '{{ states.sensor.mycar.attributes["energy"][0]["charging"]["charging_rate"] }}'
+      unit_of_measurement: "km/h"
+    mycar_carga_hora_fin:
+      friendly_name: "MyCar Hora Fin De Carga"
+      value_template: '{{ states.sensor.mycar_carga.attributes["_next_stop_hour"]}}'
+    mycar_localizacion:
+      friendly_name: "MyCar Localización"
+      value_template: '{{ states.sensor.mycar.attributes["last_position"]["geometry"]["coordinates"] }}'
+    mycar_preacond_estado:
+      friendly_name: "MyCar Estado Preacondicionamiento"
+      value_template: '{{ states.sensor.mycar.attributes["preconditionning"]["air_conditioning"]["status"] }}'
+      attribute_templates:
+        value: '{{ states.sensor.mycar.attributes["preconditionning"]["air_conditioning"]["status"] == "Enabled" }}'
+      icon_template: >
+        {% set st = states.sensor.mycar.attributes["preconditionning"]["air_conditioning"]["status"] %}
+        {% if st == "Disabled" %}
+          mdi:blank
+        {% elif st == "Enabled" %}
+          mdi:fan
+        {% elif st == "Finished" %}
+          mdi:fan-off
+        {% elif st == "Failure" %}
+          mdi:fan-alert
+        {% endif %}

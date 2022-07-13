@@ -1,0 +1,50 @@
+mycar_preacondicionar:
+  variables:
+    value: '{{ 1 if is_state(''sensor.mycar_preacond_estado'',''Disabled'') else 0
+      }}'
+  sequence:
+  - service: rest_command.mycar_preconditioning
+    data:
+      value: '{{ value }}'
+  - service: python_script.set_state
+    data:
+      entity_id: sensor.mycar_preacond_estado
+      state: Busy
+  - delay:
+      hours: 0
+      minutes: 2
+      seconds: 0
+      milliseconds: 0
+  - service: python_script.set_state
+    data:
+      entity_id: sensor.mycar_preacond_estado
+      state: '{{ states.sensor.mycar.attributes["preconditionning"]["air_conditioning"]["status"]
+        }}'
+  mode: single
+  alias: MyCar Preacondicionar
+  icon: mdi:fan-auto
+mycar_cargar:
+  variables:
+    value: '{{ 1 if is_state(''sensor.mycar_carga_estado'',''Disconnected'') else 0
+      }}'
+  sequence:
+  - service: rest_command.mycar_charge_now
+    data:
+      value: '{{ value }}'
+  - service: python_script.set_state
+    data:
+      entity_id: sensor.mycar_carga_estado
+      state: Busy
+  - delay:
+      hours: 0
+      minutes: 2
+      seconds: 0
+      milliseconds: 0
+  - service: python_script.set_state
+    data:
+      entity_id: sensor.mycar_carga_estado
+      state: '{{ states.sensor.mycar.attributes["energy"][0]["charging"]["status"]
+        }}'
+  alias: MyCar Cargar
+  mode: single
+  icon: mdi:battery-sync

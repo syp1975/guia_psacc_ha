@@ -1,0 +1,11 @@
+- platform: template
+  sensors:
+    mycar_cable_enchufado:
+      friendly_name: "MyCar Cable Enchufado"
+      value_template: '{{ states.sensor.mycar.attributes["energy"][0]["charging"]["plugged"] }}'
+      icon_template: >
+        {% if states.sensor.mycar.attributes["energy"][0]["charging"]["plugged"] %}
+          mdi:power-plug
+        {% else %}
+          mdi:blank
+        {% endif %}

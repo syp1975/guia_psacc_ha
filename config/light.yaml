@@ -1,0 +1,46 @@
+- platform: template
+  lights:
+    mycar_carga_umbral:
+      friendly_name: "MyCar Umbral De Carga"
+      level_template: '{{ (state_attr("sensor.mycar_carga","percentage_threshold")|int * 2.55)|round|int }}'
+      value_template: '{{ true }}'
+      icon_template: >
+        {% set level = (state_attr("sensor.mycar_carga","percentage_threshold")|float / 10.0)|int * 10 %}
+        {% if level >= 100 %}
+          mdi:battery
+        {% elif level > 0 %}
+          mdi:battery-{{ level }}
+        {% else %}
+          mdi:battery-outline
+        {% endif %}          
+      turn_on:
+        - service: rest_command.mycar_set_charge_threshold
+          data: >
+            {% if brightness_pct is defined %}
+              { "threshold": {{ brightness_pct|int }} }
+            {% elif brightness is defined %}
+              { "threshold": {{ (brightness/2.55)|round|int }} }
+            {% else %}
+              { "threshold": 80 }
+            {% endif %}
+        - service: homeassistant.update_entity
+          target:
+            entity_id: sensor.mycar_carga
+      turn_off:        
+        - service: rest_command.mycar_set_charge_threshold
+          data:
+            threshold: '{{ 100 }}'
+        - service: homeassistant.update_entity
+          target:
+            entity_id: sensor.mycar_carga
+      set_level:
+        - service: rest_command.mycar_set_charge_threshold
+          data: >
+            {% if brightness_pct is defined %}
+              { "threshold": {{ brightness_pct|int }} }
+            {% elif brightness is defined %}
+              { "threshold": {{ (brightness/2.55)|round|int }} }
+            {% endif %}
+        - service: homeassistant.update_entity
+          target:
+            entity_id: sensor.mycar_carga

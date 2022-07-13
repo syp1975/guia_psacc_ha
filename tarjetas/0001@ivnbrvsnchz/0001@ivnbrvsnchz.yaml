@@ -1,0 +1,171 @@
+type: picture-elements
+image: /local/mycar.png
+elements:
+  - type: icon
+    icon: mdi:road-variant
+    style:
+      top: 9%
+      left: 4%
+  - type: state-label
+    entity: sensor.mycar_autonomia
+    style:
+      top: 10%
+      left: 12%
+      text-align: right
+  - type: icon
+    icon: mdi:counter
+    style:
+      top: 9%
+      left: 96%
+  - type: state-label
+    entity: sensor.mycar_kilometraje
+    style:
+      top: 10%
+      left: 81%
+      text-align: right
+  - type: state-icon
+    entity: sensor.mycar_bateria
+    style:
+      top: 25%
+      left: 4%
+  - type: state-label
+    entity: sensor.mycar_bateria
+    style:
+      top: 26%
+      left: 12%
+      text-align: right
+  - type: custom:slider-entity-row
+    entity: light.mycar_carga_umbral
+    min: 70
+    step: 5
+    full_row: true
+    style:
+      top: 26%
+      left: 67%
+      width: 50%
+  - type: icon
+    icon: mdi:format-vertical-align-top
+    style:
+      top: 25%
+      left: 96%
+  - type: icon
+    icon: mdi:car-battery
+    style:
+      top: 41%
+      left: 4%
+  - type: state-label
+    entity: sensor.mycar_bateria_voltage
+    style:
+      top: 41%
+      left: 12%
+      text-align: right
+  - type: state-icon
+    entity: binary_sensor.mycar_cable_enchufado
+    state_color: false
+    style:
+      top: 56%
+      left: 4%
+  - type: state-icon
+    entity: sensor.mycar_carga_estado
+    style:
+      top: 73%
+      left: 4%
+  - type: state-icon
+    entity: sensor.mycar_carga_tipo
+    style:
+      top: 89%
+      left: 4%
+  - type: custom:paper-buttons-row
+    buttons:
+      - entity: sensor.mycar_carga_estado
+        layout: icon
+        tap_action:
+          action: call-service
+          service: script.mycar_cargar
+        styles:
+          button:
+            color: white
+            background-color: rgb(64,160,192)
+            border-radius: 50%
+        state_icons:
+          disconnected: mdi:ev-station
+          busy: mdi:loading
+        state_styles:
+          busy:
+            button:
+              background-color: gray
+            icon:
+              animation: rotating 2s linear infinite
+          inprogress:
+            button:
+              background-color: rgb(64,160,32)
+            icon:
+              animation: blink 3s ease infinite
+          stopped:
+            button:
+              background-color: rgb(132,64,160)
+            icon:
+              animation: blink 3s ease infinite
+          finished:
+            button:
+              background-color: rgb(132,64,160)
+            icon:
+              animation: blink 3s ease infinite
+          failure:
+            button:
+              background-color: rgb(176,32,32)
+            icon:
+              animation: blink 1s ease infinite
+    style:
+      top: 57%
+      left: 92%
+  - type: custom:paper-buttons-row
+    buttons:
+      - entity: sensor.mycar_preacond_estado
+        layout: icon
+        tap_action:
+          action: call-service
+          service: script.mycar_preacondicionar
+        styles:
+          button:
+            color: white
+            background-color: rgb(64,160,192)
+            border-radius: 50%
+        state_icons:
+          disabled: mdi:fan
+          busy: mdi:loading
+        state_styles:
+          busy:
+            button:
+              background-color: gray
+            icon:
+              animation: rotating 2s linear infinite
+          enabled:
+            button:
+              background-color: rgb(132,64,160)
+            icon:
+              animation: rotating 2s linear infinite
+          finished:
+            button:
+              background-color: rgb(64,160,32)
+            icon:
+              animation: blink 3s ease infinite
+          failure:
+            button:
+              background-color: rgb(176,32,32)
+            icon:
+              animation: blink 1s ease infinite
+    style:
+      top: 83%
+      left: 92%
+card_mod:
+  style: |
+    ha-card {
+      color: var(--secondary-text-color)
+    }
+    hui-state-label-element {
+      width: 25%;
+    }
+    hui-icon-element {
+      color: var(--paper-item-icon-color)
+    }

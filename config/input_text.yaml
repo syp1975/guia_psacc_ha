@@ -1,0 +1,6 @@
+mycar_vin:
+  name: MyCar VIN
+  initial: !secret mycar_vin
+mycar_baseurl:
+  name: MyCar URL Base
+  initial: !secret mycar_baseurl

@@ -1,0 +1,14 @@
+mycar_wakeup:
+  url: "{{ states('input_text.mycar_baseurl') }}/wakeup/{{ states('input_text.mycar_vin') }}"
+mycar_preconditioning:
+  url: "{{ states('input_text.mycar_baseurl') }}/preconditioning/{{ states('input_text.mycar_vin') }}/{{ '1' if (value is defined and value) else '0' }}"
+mycar_charge_now:
+  url: "{{ states('input_text.mycar_baseurl') }}/charge_now/{{ states('input_text.mycar_vin') }}/{{ '1' if (value is defined and value) else '0' }}"
+mycar_set_charge_threshold:
+  url: "{{ states('input_text.mycar_baseurl') }}/charge_control?vin={{ states('input_text.mycar_vin') }}&percentage={{ threshold }}"
+mycar_set_charge_start:
+  url: "{{ states('input_text.mycar_baseurl') }}/charge_hour?vin={{ states('input_text.mycar_vin') }}&hour={{ hour }}&min={{ minute }}"
+mycar_set_charge_stop:
+  url: "{{ states('input_text.mycar_baseurl') }}/charge_control?vin={{ states('input_text.mycar_vin') }}&hour={{ hour }}&minute={{ minute }}"
+mycar_getvi:
+  url: "{{ states('input_text.mycar_baseurl') }}/get_vehicleinfo/{{ states('input_text.mycar_vin') }}"

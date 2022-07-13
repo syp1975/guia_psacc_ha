@@ -1,0 +1,13 @@
+type: history-graph
+entities:
+  - entity: sensor.mycar_bateria
+    name: SoC
+  - entity: sensor.medidor_coche_intensidad
+    name: Intensidad de carga
+  - entity: binary_sensor.mycar_cable_enchufado
+    name: Enchufado
+  - entity: sensor.mycar_carga_estado
+    name: Estado
+  - entity: sensor.mycar_preacond_estado
+refresh_interval: 0
+hours_to_show: 8
