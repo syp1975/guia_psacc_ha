@@ -255,7 +255,7 @@ Este es el paso final, que es añadir una o más tarjetas en la inferfaz de usua
 </td>
 </tr>
 <tr>
-<td><img src="img/link.png"></img></td>
+<td><img src="img/link.png"/></td>
 <td colSpan=2>
 <a href="tarjetas/0001@ivnbrvsnchz/0001@ivnbrvsnchz.yaml">YAML</a><br>
 <a href="tarjetas/0001@ivnbrvsnchz/e208.png">e208.png</a><br>
@@ -265,11 +265,12 @@ Guardar una imagen del vehículo en <i>config/www/mycar.png</i>
 </table>
 
 <table>
-<tr><td colSpan=3>Histórico del porcentaje de la batería, cable enchufado, estado de carga y preacondicionamiento</td></tr><tr><td colSpan=3><tr><td colSpan=3><img alt="tarjeta" style="width:480px" src="img/865771cb69027f014d50e81995737e51.png"/></td></tr>
+<tr><td colSpan=3>Histórico del porcentaje de la batería, cable enchufado, estado de carga y preacondicionamiento</td></tr>
+<tr><td colSpan=3><img alt="tarjeta" style="width:480px" src="img/865771cb69027f014d50e81995737e51.png"/></td></tr>
 <tr>
-<td><img src="img/link.png"></img></td>
+<td><img src="img/link.png"/></td>
 <td colSpan=2 width="100%">
-<a href="tarjetas/0002@ivnbrvsnchz/0002@ivnbrvsnchz.yaml">YAML</a><br>
+<a href="tarjetas/0002@ivnbrvsnchz/0002@ivnbrvsnchz.yaml">YAML</a>
 </td>
 </tr>
 </table>
