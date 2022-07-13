@@ -232,13 +232,13 @@ Este es el paso final, que es añadir una o más tarjetas en la inferfaz de usua
 <tr><td colSpan=3>Visualización comptacta con iconos que cambian según el estado del vehículo, barra de desplazamiento para ajustar el tope de carga, pausar/reanudar carga y iniciar/parar climatización</td></tr>
 <tr><td colSpan=3><img alt="tarjeta" style="width:480px" src="img/268078288af9b98dfeb3658a231306ed.png"/></td></tr>
 <tr>
-<td><img src="tarjetas/0001@ivnbrvsnchz/format-vertical-align-top"></img></td>
+<td><img src="tarjetas/0001@ivnbrvsnchz/format-vertical-align-top.png"></img></td>
 <td colSpan=2>tope de carga</td>
 </tr>
 <tr>
 <td><img src="tarjetas/0001@ivnbrvsnchz/ev-station.png"></img></td>
 <td width="100%">suspende / reanuda la carga (actualmente no funciona en PSACC)</td>
-<td><b style="color:#20D020">cargando</b><br><b style="color:#E000F0">diferida</b></td>
+<td nowrap>&#x1F49C;<b>cargando</b><br>&#x1F49A;<b>diferida</b></td>
 </tr>
 <tr>
 <td><img src="tarjetas/0001@ivnbrvsnchz/fan.png"></img></td>
